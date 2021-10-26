@@ -20,7 +20,8 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitThis": true,
     "alwaysStrict": true,
-    "noImplicitReturns": true
+    "noImplicitReturns": true,
+    "noUncheckedIndexedAccess": true
   },
   "include": [
     "./src/**/*"
