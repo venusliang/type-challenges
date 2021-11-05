@@ -28,7 +28,6 @@ type UnionToIntersection<U> = (U extends any ? (u: U) => any : never) extends (
   : never;
 
 /* _____________ 测试用例 _____________ */
-
 type cases = [
   Expect<Equal<UnionToIntersection<"foo" | 42 | true>, "foo" & 42 & true>>,
   Expect<

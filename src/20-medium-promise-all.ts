@@ -26,14 +26,9 @@ import { Equal, Expect } from "@type-challenges/utils";
 
 /* _____________ 你的代码 _____________ */
 
-type ParsePromiseReturn<
-  T,
-  S = T extends readonly any[] ? [...T] : T
-> = S extends [infer F, ...(infer O)]
-  ? [F extends Promise<infer P> ? P : F, ...ParsePromiseReturn<O>]
-  : S;
-
-declare function PromiseAll<T>(values: T): Promise<ParsePromiseReturn<T>>;
+declare function PromiseAll<T extends any[]>(
+  values: readonly [...T]
+): Promise<{ [K in keyof T]: T[K] extends Promise<infer R> ? R : T[K] }>;
 
 /* _____________ 测试用例 _____________ */
 
