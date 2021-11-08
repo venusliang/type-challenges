@@ -61,7 +61,7 @@ type Computed<C> = C extends Record<string, ComputedFunc<any>>
 
 declare function VueBasicProps<D, P, C, M extends Methods>(
   options: {
-    props: P;
+    // props: P;
     data: (this: ThisType<M & Computed<C> & P>) => D;
     computed: C;
     methods: M;

@@ -14,8 +14,7 @@
 import { Equal, Expect } from "@type-challenges/utils";
 
 /* _____________ Your Code Here _____________ */
-
-type IsAny<T> = any;
+type IsAny<T> = 0 extends true & T ? true : false;
 
 /* _____________ Test Cases _____________ */
 
