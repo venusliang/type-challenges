@@ -59,10 +59,24 @@ type Computed<C> = C extends Record<string, ComputedFunc<any>>
   ? { [K in keyof C]: ReturnType<C[K]> }
   : never;
 
+type GetType<T> = T extends readonly any[]
+  ? ReturnType<T[number]>
+  : T extends (...args: any) => any
+  ? ReturnType<T>
+  : T extends new (...args: any) => any
+  ? InstanceType<T>
+  : any;
+
+type ComposePropsType<P> = {
+  [K in keyof P]: "type" extends keyof P[K]
+    ? GetType<P[K]["type"]>
+    : GetType<P[K]>;
+};
+
 declare function VueBasicProps<D, P, C, M extends Methods>(
   options: {
-    // props: P;
-    data: (this: ThisType<M & Computed<C> & P>) => D;
+    props?: Readonly<P>;
+    data: (this: {} & Readonly<ComposePropsType<P>>) => D;
     computed: C;
     methods: M;
   } & ThisType<D & M & Computed<C>>
