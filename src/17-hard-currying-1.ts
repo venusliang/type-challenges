@@ -32,7 +32,8 @@ import { Equal, Expect } from "@type-challenges/utils";
 
 /* _____________ 你的代码 _____________ */
 type Curry<T> = T extends (...args: infer A) => infer R
-    ? (A extends [x: infer X, ...other: infer O] ? (arg: X) => Curry<(...args: O) => R> : R) 
+    ? (A extends [x: infer X, ...other: infer O]
+        ? (arg: X) => Curry<(...args: O) => R> : R)
     : never;
 
 declare function Currying<A>(

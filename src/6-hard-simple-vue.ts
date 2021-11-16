@@ -85,6 +85,7 @@ SimpleVue({
   },
   computed: {
     fullname() {
+      type t = typeof this;
       return `${this.firstname} ${this.lastname}`;
     }
   },

@@ -40,7 +40,17 @@ import { Equal, Expect } from "@type-challenges/utils";
 
 /* _____________ Your Code Here _____________ */
 
-type UnionToTuple<T> = any;
+type UnionToFunc<T> = T extends any ? (x: T) => 0 : never;
+
+type UnionToIntersect<T> = UnionToFunc<T> extends (x: infer I) => 0 ? I : never;
+
+type LastIntersect<T> = T extends (a: infer F) => 0 ? F : never;
+
+type UnionToTuple<T, L = LastIntersect<UnionToIntersect<UnionToFunc<T>>>> = [
+  T
+] extends [never]
+  ? []
+  : [...UnionToTuple<Exclude<T, L>>, L];
 
 /* _____________ Test Cases _____________ */
 

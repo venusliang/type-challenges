@@ -21,11 +21,13 @@ import { Equal, Expect } from "@type-challenges/utils";
 
 /* _____________ 你的代码 _____________ */
 // https://www.stephanboyer.com/about 参阅逆变与协变资料
-type UnionToIntersection<U> = (U extends any ? (u: U) => any : never) extends (
+type UnionToIntersection<U> = (U extends any ? (u: U) => 0 : never) extends (
   a: infer K
-) => any
+) => 0
   ? K
   : never;
+
+type t = UnionToIntersection<"foo" | 42 | true>;
 
 /* _____________ 测试用例 _____________ */
 type cases = [
