@@ -45,7 +45,37 @@ import { Equal, Expect } from "@type-challenges/utils";
 
 /* _____________ Your Code Here _____________ */
 
-type DistributeUnions<T> = any;
+type Primitive = string | number | boolean | undefined | null;
+
+type UnionToFunc<T> = T extends any ? (x: T) => 0 : never;
+
+type UnionToIntersect<T> = UnionToFunc<T> extends (x: infer I) => 0 ? I : never;
+
+type LastIntersect<T> = T extends (a: infer F) => 0 ? F : never;
+
+type UnionToTuple<T, L = LastIntersect<UnionToIntersect<UnionToFunc<T>>>> = [
+    T
+] extends [never]
+    ? []
+    : [...UnionToTuple<Exclude<T, L>>, L];
+
+type IsUnion<T> = T[] extends (T extends any ? T[] : never) ? false : true;
+
+type DistributeTupleUnions<T> = T extends [infer F, ...infer O] ? (F extends any ? [F, ...DistributeTupleUnions<O>] : []) : [];
+
+type MergeTupleToObject<T extends any[], R = {}> = T extends [infer F, ...infer O] ? MergeTupleToObject<O, R & F> : { [K in keyof R]: R[K] };
+
+type UnionValueToObject<T, K> = T extends any ? { [K1 in K as K extends string | number ? K : never]: T } : never;
+
+type SplitObjectUntion<T> = UnionToTuple<{
+    [K in keyof T]: [UnionValueToObject<T[K], K>];
+}[keyof T]>;
+
+type DistributeObjectUnionsToTuple<T, R extends any[] = SplitObjectUntion<T>> = R extends [[infer F], ...infer O] ? (F extends any ? [F, ...DistributeObjectUnionsToTuple<T, O>] : []) : [];
+
+type DistributeObjectUnions<T, R extends any[] = DistributeObjectUnionsToTuple<T>> = R extends any ? MergeTupleToObject<R> : never;
+
+type DistributeUnions<T> = IsUnion<T> extends true ? T : T extends Primitive ? T : T extends any[] ? DistributeTupleUnions<T> : DistributeObjectUnions<T>;
 
 /* _____________ Test Cases _____________ */
 
