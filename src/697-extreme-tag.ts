@@ -89,13 +89,40 @@ import { IsTrue, Expect, Equal } from "@type-challenges/utils";
 
 /* _____________ Your Code Here _____________ */
 
-type GetTags<B> = any;
+declare const TAG_SYMBOL: unique symbol;
 
-type Tag<B, T extends string> = any;
+type IsNever<T> = (T extends any ? () => T : false) extends () => never
+  ? true
+  : false;
 
-type UnTag<B> = any;
+type SymoblTagType = typeof TAG_SYMBOL;
 
-type HasTag<B, T extends string> = any;
+type GenTag<T extends string[]> = [SymoblTagType, ...T];
+
+type IsTag<S> = S extends [SymoblTagType, ...any] ? 1 : 0;
+
+type GetTagTuple<T> = T extends [infer F, ...(infer O)]
+  ? F extends SymoblTagType
+    ? O
+    : never
+  : never;
+
+type GetTags<B> = B extends any ? GetTagTuple<B> : never;
+
+type Tag<B, T extends string, Tags extends any[] = GetTags<B>> = IsNever<
+  Tags
+> extends true
+  ? B | GenTag<[T]>
+  : UnTag<B> | GenTag<[...Tags, T]>;
+
+type UnTag<B> = B extends any ? (IsTag<B> extends 1 ? never : B) : never;
+
+type HasTag<B, T extends string, Tags extends any[] = GetTags<B>> = (
+  Tags extends any ? (T extends Tags[number] ? 1 : 0) : never
+) extends 1
+  ? true
+  : false;
+
 type HasTags<B, T extends readonly string[]> = any;
 type HasExactTags<B, T extends readonly string[]> = any;
 
