@@ -65,7 +65,6 @@ type TupleSum<A extends any[], B extends any[], R extends any[] = [], C extends 
 
 type Sum<A extends string | number | bigint, B extends string | number | bigint> = TupleSum<ToTuple<A>, ToTuple<B>, []>;
 
-
 /* _____________ Test Cases _____________ */
 
 type cases = [
