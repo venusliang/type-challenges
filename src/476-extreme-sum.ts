@@ -57,7 +57,6 @@ type SumToCarry<A, B, C, R extends string[] = ToTuple<TensDigitSum<A, B, C>>> = 
 
 type TupleToString<T extends any[]> = T extends [string, ...infer O] ? `${T[0]}${TupleToString<O>}` : '';
 
-
 type TupleSum<A extends any[], B extends any[], R extends any[] = [], C extends any = ''> = A extends []
     ? (C extends '' ? TupleToString<[...B, ...R]> : TupleSum<B, [C], R>) : B extends []
     ? (C extends '' ? TupleToString<[...A, ...R]> : TupleSum<A, [C], R>) : SumToCarry<TuplePop<A>, TuplePop<B>, C> extends [infer C1, infer T]

@@ -21,9 +21,7 @@ import { Equal, Expect } from '@type-challenges/utils'
 /* _____________ Your Code Here _____________ */
 
 
-type BinaryToDecimal<S extends string, R extends any[] = []> = S extends `${infer F}${infer L}` ? (
-  BinaryToDecimal<L, [...R, ...R, ...(F extends '1' ? [any] : [])]>
-) : R['length'];
+type BinaryToDecimal<S extends string, R extends any[] = []> = S extends `${infer F}${infer L}` ? BinaryToDecimal<L, [...R, ...R, ...(F extends '1' ? [any] : [])]> : R['length'];
 
 
 /* _____________ Test Cases _____________ */
