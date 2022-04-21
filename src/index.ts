@@ -11,7 +11,7 @@ type TupleLast<T extends any[]> = T extends [x: any, ...other: infer R] ? T[R['l
 // 从头部加入一个元素
 type TupleUnshift<T extends any[], X> = [X, ...T]
 
-// 1
+// 
 type TuplePush<T extends any[], X> = [...T, X]
 
 type TupleInit<T extends any[]> = T extends [...f: infer R1, l: infer _R2] ? R1 : undefined
