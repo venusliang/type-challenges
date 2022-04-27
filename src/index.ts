@@ -5,7 +5,7 @@ type TupleHead<T extends any[]> = T[0];
 type TupleTail<T extends any[]> = T extends [x: any, ...other: infer R] ? R : []
 
 // 取得最后一个元素
-type TupleLast<T extends any[]> = T extends [x: any, ...other: infer R] ? T[R['length']] : undefined
+type TupleLast<T extends any[]> = T extends [x: any, ...other: infer R] ? T[R['length']] : never
 
 
 // 从头部加入一个元素
@@ -14,7 +14,7 @@ type TupleUnshift<T extends any[], X> = [X, ...T]
 // 
 type TuplePush<T extends any[], X> = [...T, X]
 
-type TupleInit<T extends any[]> = T extends [...f: infer R1, l: infer _R2] ? R1 : undefined
+type TupleInit<T extends any[]> = T extends [...f: infer R1, l: infer _R2] ? R1 : never
 
 type TypeToTypeRecursively<T1 extends any[], T2, Result extends T2[]> = {
     1: Result;
