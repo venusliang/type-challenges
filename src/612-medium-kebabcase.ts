@@ -20,7 +20,7 @@ type KebabCase<S extends string, C extends string = ''> = S extends `${infer F}$
 
 type s1 = KebabCase<"FooBarBaz">
 /* _____________ Test Cases _____________ */
-
+ 
 type cases = [
   Expect<Equal<KebabCase<"FooBarBaz">, "foo-bar-baz">>,
   Expect<Equal<KebabCase<"fooBarBaz">, "foo-bar-baz">>,
