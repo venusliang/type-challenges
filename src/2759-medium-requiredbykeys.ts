@@ -28,13 +28,9 @@ import { Equal, Expect, ExpectFalse, NotEqual } from "@type-challenges/utils";
 
 /* _____________ Your Code Here _____________ */
 
-type Merge<T> = {
-  [K in keyof T]: T[K];
-};
-
-type RequiredByKeys<T, K extends any = keyof T> = Merge<
+type RequiredByKeys<T, K extends keyof T = keyof T> = Omit<
   { [K1 in Exclude<keyof T, K>]?: T[K1] } &
-    { [K2 in Extract<keyof T, K>]-?: T[K2] }
+    { [K2 in Extract<keyof T, K>]-?: Exclude<T[K2], undefined> }, never
 >;
 
 /* _____________ Test Cases _____________ */
